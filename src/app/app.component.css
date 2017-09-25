@@ -1,0 +1,8 @@
+.container {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+  border: 1px solid #0E6EB8;
+  box-shadow: 2px 3px 4px #A0A0A0;
+}

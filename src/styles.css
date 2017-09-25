@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.margin-10 {
+  margin: 10px;
+  display: block;
+}
+
+.pointer {
+  cursor: pointer;
+}
