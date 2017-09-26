@@ -29,20 +29,16 @@ app.post('/add', async (req, res) => {
   try {
     data = await readFile();
   } catch (e) {
+    console.log(e);
     res.status(500);
     res.send({
       error: 'Server Internal Error'
     });
   }
-  let id = String(Date.now()).substr(-5);
-  let todo = {
-    id,
-    content: body.content,
-    complete: false
-  };
-  let result = await writeFile(JSON.parse(data), todo);
+  let todos = addTodo(body, data);
+  let result = await writeFile(todos);
   res.send({
-    data: todo
+    data: todos
   });
 });
 
@@ -59,10 +55,8 @@ app.post('/complete/:id', async (req, res) => {
       error: 'Server Internal Error'
     });
   }
-  let completedIndex = json.data.findIndex(todo => todo.id == id);
-  let completedTodo = json.data[completedIndex];
-  completedTodo.complete = body.complete;
-  let result = await writeFile(json, completedTodo, completedIndex);
+  let todos = completedTodo(id, json.data);
+  let result = await writeFile(todos);
   res.status(200);
   res.send({
     data: completedTodo
@@ -77,6 +71,25 @@ app.listen(3000, err => {
   console.log(`server starting on port: 3000`);
 });
 
+function addTodo(body, todos) {
+  todos = JSON.parse(todos).data;
+  console.log(todos);
+  let id = String(Date.now()).substr(-5);
+  let todo = {
+    id,
+    content: body.content,
+    complete: false
+  };
+  todos.push(todo);
+  return todos;
+}
+
+function completedTodo(id, todos) {
+  let completedTodo = todos.find(todo => todo.id === id);
+  completedTodo.complete = true;
+  return todos;
+}
+
 function readFile() {
   return new Promise((resolve, reject) => {
     fs.readFile('./todos.json', 'utf8', (err, data) => {
@@ -88,17 +101,11 @@ function readFile() {
   });
 }
 
-async function writeFile(content, data, index) {
-  if (!content.data) {
-    content = { data: [data] };
-  } else {
-    if (typeof index !== 'undefined') {
-      content.data[index] = data;
-    } else {
-      content.data.push(data);
-    }
-  }
-  let json = JSON.stringify(content);
+function writeFile(data) {
+  let todos = {
+    data: data
+  };
+  let json = JSON.stringify(todos);
   return new Promise((resolve, reject) => {
     fs.writeFile('./todos.json', json, err => {
       if (err) {

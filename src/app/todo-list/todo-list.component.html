@@ -1,10 +1,13 @@
 <div class="ui inverted segment">
-  <ul class="ui inverted relaxed divided list">
-    <li class="item pointer"
-      [ngClass]="{ completed: todo.complete }"
-      *ngFor="let todo of todos"
-      (click)="completedTodo(todo.id)">
-      {{ todo.content }}
-    </li>
-  </ul>
-</div>
+    <ul class="ui inverted relaxed divided list">
+      <li class="item pointer"
+        [ngClass]="{ completed: todo.complete }"
+        *ngFor="let todo of todos"
+        (click)="completedTodo(todo.id)">
+        {{ todo.content }}
+        <span class="colum delete" (click)="deleteTodo(todo.id)">
+          <i class="remove icon"></i>
+        </span>
+      </li>
+    </ul>
+  </div>

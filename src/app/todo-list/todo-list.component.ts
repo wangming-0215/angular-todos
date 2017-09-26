@@ -17,6 +17,7 @@ import { TodoService } from '../todo.service';
 export class TodoListComponent implements OnInit {
   @Input() todos: Todo[];
   @Output() completed = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<number>();
   @HostBinding('attr.class') cssClass = 'margin-10';
 
   constructor(private todoService: TodoService) {}
@@ -24,5 +25,9 @@ export class TodoListComponent implements OnInit {
 
   completedTodo(id: number) {
     this.completed.emit(id);
+  }
+
+  deleteTodo(id: number) {
+    this.delete.emit(id);
   }
 }

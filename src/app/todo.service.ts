@@ -19,17 +19,19 @@ export class TodoService {
       .catch(this.handleError);
   }
 
-  addTodo(content: string): Promise<Todo> {
+  addTodo(content: string): Promise<Todo[]> {
     return this.http
       .post(`${this.apiUrl}/add`, JSON.stringify({ content }), {
         headers: this.headers
       })
       .toPromise()
-      .then(res => res.json().data as Todo)
+      .then(res => res.json().data as Todo[])
       .catch(this.handleError);
   }
 
-  deleteTodo() {}
+  deleteTodo(id: number): Promise<Todo> {
+    return Promise.resolve({} as Todo);
+  }
 
   completedTodo(id: number): Promise<Todo> {
     return this.http

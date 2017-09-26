@@ -26,4 +26,8 @@ export class AppComponent implements OnInit {
   completedTodo(evt) {
     this.todoService.completedTodo(evt).then(() => this.getTodos());
   }
+
+  deleteTodo(evt) {
+    this.todoService.deleteTodo(evt).then(() => this.getTodos());
+  }
 }

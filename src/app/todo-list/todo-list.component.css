@@ -1,3 +1,16 @@
 .completed {
   text-decoration: line-through;
 }
+
+.delete {
+  position: absolute;
+  right: 0;
+}
+
+.delete:hover {
+  opacity: 1;
+}
+
+.delete:hover .icon {
+  transform: scale(1.5);
+}
